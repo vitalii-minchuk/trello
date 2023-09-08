@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
-import { createBoardDto } from "./dto"
 import prismadb from "@/app/lib/prismadb"
 
+import { createBoardDto } from "./dto"
 
 export async function GET(request: Request) {
     const boards = await prismadb.boards.findMany()
