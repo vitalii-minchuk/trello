@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
-import prismadb from "@/app/lib/prismadb"
 
+import prismadb from "@/app/lib/prismadb"
 import { createBoardDto } from "./dto"
 
 export async function GET(request: Request) {
