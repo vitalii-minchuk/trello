@@ -1,59 +1,57 @@
 import { NextResponse } from "next/server"
 
 import prismadb from "@/app/lib/prismadb"
-import { createColumnDto } from "./dto"
+import { createCardDto } from "./dto"
 
 export async function GET(request: Request) {
     const {searchParams} = new URL(request.url)
-    const boardId = searchParams.get('boardId')
+    const columnId = searchParams.get('columnId')
 
-    if (!boardId) {
+    if (!columnId) {
         return NextResponse.json([{
             code: 'missing_query_param',
-            field: 'boardId',
-            message: 'Query param boardId is required'
+            field: 'columnId',
+            message: 'Query param columnId is required'
         }], {status: 400})
     }
 
-    const columns = await prismadb.columns.findMany({
+    const cards = await prismadb.cards.findMany({
         where: {
-            boardId
+            columnId
         },
         orderBy: {
             order: 'asc'
         }
     })
 
-    return NextResponse.json(columns)
+    return NextResponse.json(cards)
 }
 
 export async function POST(request: Request) {
     const bodyRaw = await request.json()
-    const validateBody = createColumnDto.safeParse(bodyRaw)
+    const validateBody = createCardDto.safeParse(bodyRaw)
     
     if (!validateBody.success) {
         return NextResponse.json(validateBody.error.issues, {status: 400})
     }
 
-    const {title, boardId, width} = validateBody.data
+    const {columnId} = validateBody.data
 
-    const lastColumn = await prismadb.columns.findFirst({
+    const lastCard = await prismadb.cards.findFirst({
         where: {
-            boardId
+            columnId
         },
         orderBy: {
             order: 'desc'
         }
     })
 
-    const newColumn = await prismadb.columns.create({
+    const newCard = await prismadb.cards.create({
         data: {
-            title,
-            boardId,
-            width,
-            order: lastColumn ? lastColumn.order + 1 : 0,
+            ... validateBody.data,
+            order: lastCard ? lastCard.order + 1 : 0,
         }
     })
 
-    return NextResponse.json(newColumn)
+    return NextResponse.json(newCard)
 }
