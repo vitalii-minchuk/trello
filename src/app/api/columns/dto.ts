@@ -7,3 +7,8 @@ export const createColumnDto = z.object({
 })
 
 export const updateColumnDto = createColumnDto.partial()
+
+export const updateColumnOrderDto = z.array(z.object({
+    id: z.string().uuid(),
+    order: z.number()
+}))
