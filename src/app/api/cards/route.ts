@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 
-import prismadb from "@/app/lib/prismadb"
 import { createCardDto } from "./dto"
+import prismadb from "@/lib/prismadb"
 
 export async function GET(request: Request) {
     const {searchParams} = new URL(request.url)

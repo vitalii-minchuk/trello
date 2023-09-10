@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-import prismadb from "@/app/lib/prismadb";
 import { updateCardOrderDto } from "../dto";
+import prismadb from "@/lib/prismadb"
 
 export async function PATCH(request: Request) {
     const bodyRaw = await request.json()

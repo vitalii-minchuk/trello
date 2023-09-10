@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { UserDropdown } from "@/components"
+import { UserDropdown } from "@/components/user-dropdown.component"
   
 export const Navbar = () => {
   return (
