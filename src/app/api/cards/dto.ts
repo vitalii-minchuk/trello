@@ -5,7 +5,11 @@ export const createCardDto = z.object({
     columnId: z.string().uuid()
 })
 
-export const updateCardDto = createCardDto.partial()
+export const updateCardDto = createCardDto
+    .extend({
+        descriptions: z.string().max(255).nullable()
+    })
+    .partial()
 
 export const updateCardOrderDto = z.array(z.object({
     id: z.string().uuid(),

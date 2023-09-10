@@ -3,13 +3,13 @@ import { NextResponse } from "next/server"
 import prismadb from "@/app/lib/prismadb"
 import { updateCardDto } from "../dto"
 
-interface IColumnsContextProps {
+interface ICardsContextProps {
      params: {
         cardId: string
      }
 }
 
-export async function DELETE(request: Request, {params}: IColumnsContextProps) {
+export async function DELETE(request: Request, {params}: ICardsContextProps) {
     const id = params.cardId
 
     const findCard = await prismadb.cards.findUnique({
@@ -36,7 +36,7 @@ export async function DELETE(request: Request, {params}: IColumnsContextProps) {
     return NextResponse.json({}, {status: 200})
 }
  
-export async function PATCH(request: Request, {params}: IColumnsContextProps) {
+export async function PATCH(request: Request, {params}: ICardsContextProps) {
     const bodyRaw = await request.json()
     const validateBody = updateCardDto.safeParse(bodyRaw)
     const id = params.cardId
@@ -60,14 +60,12 @@ export async function PATCH(request: Request, {params}: IColumnsContextProps) {
         })
     }
 
-    const {title} = validateBody.data
-
     const updatedCard = await prismadb.cards.update({
         where: {
             id
         },
         data: {
-            title
+            ...validateBody.data
         }
     })
 
