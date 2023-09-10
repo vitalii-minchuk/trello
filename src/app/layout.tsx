@@ -1,6 +1,5 @@
-import { Navbar } from '@/components/Navbar'
-import './globals.css'
 import type { Metadata } from 'next'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Trello clone',
@@ -15,7 +14,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className='dark'>
-      <Navbar />
         {children}
       </body>
     </html>
