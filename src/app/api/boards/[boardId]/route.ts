@@ -1,12 +1,33 @@
 import { NextResponse } from "next/server"
 
-import prismadb from "@/app/lib/prismadb"
 import { updateBoardDto } from "../dto"
+import prismadb from "@/lib/prismadb"
 
 interface IBoardsContextProps {
      params: {
         boardId: string
      }
+}
+
+export async function GET(request: Request, {params}: IBoardsContextProps) {
+    const id = params.boardId
+
+    const findBoard = await prismadb.boards.findUnique({
+        where: {
+            id
+        }
+    })
+
+    if (!findBoard) {
+        return NextResponse.json({
+            code: 'not_found',
+            message: 'Board not found'
+        }, {
+            status: 404
+        })
+    }
+
+    return NextResponse.json(findBoard)
 }
 
 export async function DELETE(request: Request, {params}: IBoardsContextProps) {

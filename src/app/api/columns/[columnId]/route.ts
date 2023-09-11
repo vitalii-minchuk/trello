@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 
-import prismadb from "@/app/lib/prismadb"
+import prismadb from "@/lib/prismadb"
 import { updateColumnDto } from "../dto"
 
 interface IColumnsContextProps {

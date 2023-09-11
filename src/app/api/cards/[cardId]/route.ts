@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 
-import prismadb from "@/app/lib/prismadb"
 import { updateCardDto } from "../dto"
+import prismadb from "@/lib/prismadb"
 
 interface ICardsContextProps {
      params: {

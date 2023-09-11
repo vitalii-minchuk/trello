@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
-import { Navbar } from '@/components'
+import { Navbar } from '@/components/navbar.component'
 import { ReactQueryProvider } from '@/providers'
 
 export const metadata: Metadata = {
