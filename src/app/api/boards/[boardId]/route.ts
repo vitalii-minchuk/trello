@@ -9,6 +9,27 @@ interface IBoardsContextProps {
      }
 }
 
+export async function GET(request: Request, {params}: IBoardsContextProps) {
+    const id = params.boardId
+
+    const findBoard = await prismadb.boards.findUnique({
+        where: {
+            id
+        }
+    })
+
+    if (!findBoard) {
+        return NextResponse.json({
+            code: 'not_found',
+            message: 'Board not found'
+        }, {
+            status: 404
+        })
+    }
+
+    return NextResponse.json(findBoard)
+}
+
 export async function DELETE(request: Request, {params}: IBoardsContextProps) {
     const id = params.boardId
 
